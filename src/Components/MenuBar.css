@@ -1,0 +1,15 @@
+.menubar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+}
+.logoutBtn {
+  background: white;
+  color: #2196f3;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
