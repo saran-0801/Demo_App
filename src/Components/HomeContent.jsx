@@ -1,11 +1,27 @@
 import React from 'react';
 import './HomeContent.css';
 
-function HomeContent() {
+function HomeContent({ selectedScreen }) {
   return (
     <div className="homeContent">
-      <h1>Home Screen</h1>
-      <p>This is the main body content of the home page.</p>
+      {selectedScreen === 'Dashboard' && (
+        <>
+          <h1>Dashboard</h1>
+          <p>This is your main dashboard overview.</p>
+        </>
+      )}
+      {selectedScreen === 'Profile' && (
+        <>
+          <h1>Profile</h1>
+          <p>View and edit your profile here.</p>
+        </>
+      )}
+      {selectedScreen === 'Settings' && (
+        <>
+          <h1>Settings</h1>
+          <p>Change your preferences and app settings.</p>
+        </>
+      )}
     </div>
   );
 }
