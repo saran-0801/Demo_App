@@ -1,4 +1,4 @@
-import React, { use, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Grid, Card, CardContent, TextField,
@@ -34,36 +34,53 @@ function Register() {
   };
 
   const validateForm = () => {
-    let valid = true;
-    let newErrors = {};
-    const nameRegex = /^[A-Za-z ]+$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\d{10}$/;
+  let valid = true;
+  let newErrors = {};
+  const nameRegex = /^[A-Za-z ]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{10}$/;
 
-    if (!nameRegex.test(formData.name)) {
-      newErrors.name = 'Name must contain only letters';
-      valid = false;
-    }
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Enter a valid email address';
-      valid = false;
-    }
-    if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Phone must be exactly 10 digits';
-      valid = false;
-    }
-    if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
-      valid = false;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-      valid = false;
-    }
+  if (!nameRegex.test(formData.name)) {
+    newErrors.name = 'Name must contain only letters';
+    valid = false;
+  }
 
-    setErrors(newErrors);
-    return valid;
-  };
+  if (!emailRegex.test(formData.email)) {
+    newErrors.email = 'Enter a valid email address';
+    valid = false;
+  }
+
+  if (!phoneRegex.test(formData.phone)) {
+    newErrors.phone = 'Phone must be exactly 10 digits';
+    valid = false;
+  }
+
+  const password = formData.password;
+  if (password.length < 8) {
+    newErrors.password = 'Password must be at least 8 characters';
+    valid = false;
+  } else if (!/^[A-Z]/.test(password)) {
+    newErrors.password = 'Password must start with a capital letter';
+    valid = false;
+  } else if (!/[a-z]/.test(password.slice(1))) {
+    newErrors.password = 'Password must have lowercase letters after the first capital letter';
+    valid = false;
+  } else if (!/[0-9]/.test(password)) {
+    newErrors.password = 'Password must include at least one number';
+    valid = false;
+  } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    newErrors.password = 'Password must include at least one special character';
+    valid = false;
+  }
+
+  if (password !== formData.confirmPassword) {
+    newErrors.confirmPassword = 'Passwords do not match';
+    valid = false;
+  }
+
+  setErrors(newErrors);
+  return valid;
+};
 
   const handleSubmit = (e) => {
 
